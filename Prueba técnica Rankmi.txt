@@ -1,0 +1,84 @@
+ElPrueba ténica ingreso Rankmi
+
+## INSTRUCCIONES ##
+1.- Para esta prueba contarás con un día de plazo.
+2.- Debes crear un repositorio en github donde dejes los ejercicios separados por carpeta.
+3.- Los ejercicios deben venir comentados de manera clara.
+4.- Se valorará que el código sea entendible y legible a simple vista.
+
+
+## EJERCICIO 1 #
+
+Dado el siguiente código en RUBY en donde el metodo update_user recibe un hash con datos del usaurio.
+	Realizar las optimizaciones de código para optimizar el método manteniendo una legibilidad simple.
+
+def update_user user_data
+
+	begin
+
+		if(!user_data[:id].nil?)
+
+			user = User.find(user_id)
+			ho
+		else
+
+			user = User.new
+
+		end
+
+		status = user.save
+
+		if !status
+			return status
+		end
+
+		if status
+			if user_role.present? && process_id.present? && user_id.present?
+				user_role_process_data = UserRoleProcess.where(user_id: user_id, role_id: user_role, enterprise_process_id: process_id)
+
+	        	if user_role_process_data.empty?
+		      		status = UserRoleProcess.create(user_id: user_id,role_id: user_role.to_i, enterprise_process_id: process_id.to_i)
+				end
+			end
+		end
+
+		if status
+			if area_id.present?
+
+	    	    user_area = UserEnterpriseArea.where(user_id: user_id, enterprise_area_id: area_id.to_i).first
+
+		        unless user_area.present?
+      				status = UserEnterpriseArea.create(user_id: user_id, enterprise_area_id: area_id.to_i)
+      			end
+
+      		end
+		end
+
+		return status
+
+	rescue Exception => e
+		#Manejo de excepción
+	end
+
+end
+
+## EJERCICIO 2 ##
+
+Usando RUBY Crear un algoritmo que logre resolver, si se envía una coordenada de tipo "excel", ejemplo "ZA" nos devuelva el numero de columna a la que pertenece, ejemplo: Input: Z // Output: 26 Input: AA // Output: 27 Input: AB // Output: 28
+
+
+# Ejercicio 3 ##
+Usando RUBY Crear un algoritmo al cual se le deba ingresar un array de n números enteros, más un numero de resultado, ejemplo: Input: numbers={2, 7, 11, 15}, target=9 Este algoritmo debe ser capaz de encontrar dos números dentro del array que sumados sean igual al numero target, obviamente el algoritmo no puede ser un for que vaya sumando todos los números de uno en uno, debe tener mayor inteligencia. El resultado debe indicar la posición del array de los números que sumados dan el resultado esperado, ejemplo: Output: index1=1, index2=2
+
+
+# Ejercicio 4 ##
+1.- Crear un endpoint api que permita, dado un identificador,  encontrar todos los padres e hijos  que un modelo “Categoría" pueda tener.
+
+Una categoría es una forma sencilla de organizar la información, piénsalo como  “tags” con el que se ordenan textos, números o data en general.
+Una categoría puede tener UN padre y multiples HIJOS.
+
+Evita utilizar scaffolding y las rutas agrúpalas dentro del namespace v1::categories
+
+2.- Crear un endpoint  que permite crear una categoría y asignarle un padre.
+
+UTILIZA SOLO LA BD POR DEFECTO (SQLITE)

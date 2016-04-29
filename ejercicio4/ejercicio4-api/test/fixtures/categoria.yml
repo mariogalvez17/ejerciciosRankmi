@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nombre: MyText
+  descripcion: MyText
+  valor: 1.5
+  padre_id: 
+
+two:
+  nombre: MyText
+  descripcion: MyText
+  valor: 1.5
+  padre_id: 
