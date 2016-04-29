@@ -3,6 +3,12 @@ class ejercicio1
 # =>  Desc: Actualiza la data de un usuario
 # =>  Params in: user_Data: hash con informacion del usuario 
 
+=begin
+## EJERCICIO 1 #
+	Dado el siguiente código en RUBY en donde el metodo update_user recibe un hash con datos del usaurio.
+	Realizar las optimizaciones de código para optimizar el método manteniendo una legibilidad simple.
+=end
+
 	def update_user user_data
 
 		begin
@@ -50,4 +56,8 @@ class ejercicio1
 		end
 
 	end
+	
+	# => Como no se tiene informacion sobre el funcionamiento del metodo find se dejo dicha parte del codigo
+	# => Sin embargo se acota que la operacion de save se realiza sobre un obejto que 
+	# => en primera instancia no parece haber mutado, lo cual no tendria sentido en un metodo update.
 end

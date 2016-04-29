@@ -15,13 +15,13 @@ ejemplo: Output: index1=1, index2=2
 =end
 
 
-	#=> finAddress: Metodo para conseguir los indices de  2 elementos de un arreglo que producen una suma igual al parametro target 
+	#=> Desc finAddress: Metodo para conseguir los indices de  2 elementos de un arreglo que producen una suma igual al parametro target 
 	#=>Inputs
 		#=> numbers: Arreglo de numeros a evaluar
 		#=> target: Resultado buscado
 	#=>Output: hash con los dos indices del arreglo numbers que summados son igual a target
 
-	def self.findAdders numbers, target
+	def self.find_adders numbers, target
 		
 		output= Hash.new
 		

@@ -7,19 +7,23 @@ module Api
 				render json: @categories
 			end
 			
+
 			def show
+				logger.info "#{__method__}"
 				id       = params[:id]
-				@category= Category.relaciones(id)
+				@category= Category.find(id).extract_data
 				render json: @category
 			end
 
 
+			# => Descripcion consumo Metodo Create 
 			# => Content-Type: application/json
 			# => accept: application/json
 			# => accept-encoding: gzip, deflate
 			# => accept-language: en-US,en;q=0.8
 			# => content-type: application/json
 			# => user-agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36
+			# => Invocacion a traves de un hash con la siguiente estructura
 			# => {"category":{"nombre":"Nueva categoria", "valor":"5", "descripcion":"descripcion de nueva categoria","padre_id":"10"}}
 			
 			def create
