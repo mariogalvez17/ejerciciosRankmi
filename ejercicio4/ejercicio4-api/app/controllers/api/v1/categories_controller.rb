@@ -1,16 +1,53 @@
 module Api
 	module V1
-    	class CategoriesController < ApplicationController
-     		respond_to :json
+		class CategoriesController < ApplicationController
 
+			def index
+				@categories = Category.all
+				render json: @categories
+			end
+			
 			def show
-			respond_with Categorie.find(params[:id])
+				id       = params[:id]
+				@category= Category.relaciones(id)
+				render json: @category
 			end
 
+
+			# => Content-Type: application/json
+			# => accept: application/json
+			# => accept-encoding: gzip, deflate
+			# => accept-language: en-US,en;q=0.8
+			# => content-type: application/json
+			# => user-agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36
+			# => {"category":{"nombre":"Nueva categoria", "valor":"5", "descripcion":"descripcion de nueva categoria","padre_id":"10"}}
+			
 			def create
-			respond_with Categorie.create(params[:categorie],params[:padre])
+				
+				begin
+
+					@category = Category.new(allowed_params)
+					@category.created_at = Date.today
+					@category.updated_at = Date.today
+					logger.info 'DER'
+	    			if @category.save
+	    				@category = Category.load_data(@category.id)
+	    				render json: {category: @category.to_json, code: 201, message: 'Categoria creada con exito'}, status: 201
+	    			else
+	    				render json: {category: @category.to_json, code: 400, errors: @category.obj_errors.to_json}, status: 400
+	    			end
+
+				rescue Exception => e	      			
+	      			Rails.logger.error "Error creando nueva categoria #{e.message}" 
+	      			render json: {category: @category.to_json, code: 400, errors:e.message}, status: 400
+	  			end
 			end
 
+			private
+				def allowed_params
+					Rails.logger.info "permitidos?"
+					params.require(:category).permit(:nombre,:descripcion,:padre_id,:valor,:id)
+				end
 		end
-  	end
+	end
 end

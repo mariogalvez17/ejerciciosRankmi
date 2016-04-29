@@ -1,3 +1,3 @@
 class Hijo < ActiveRecord::Base
-	belongs_to :categorie
+	belongs_to :category
 end

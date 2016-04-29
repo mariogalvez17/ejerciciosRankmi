@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20160429064519) do
     t.integer  "padre_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    
   end
 
   add_index "categories", ["padre_id"], name: "index_categories_on_padre_id"
@@ -28,10 +29,10 @@ ActiveRecord::Schema.define(version: 20160429064519) do
     t.text     "nombre"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
-    t.integer  "categorie_id"
+    t.integer  "category_id"
   end
 
-  add_index "hijos", ["categorie_id"], name: "index_hijos_on_categorie_id"
+  add_index "hijos", ["category_id"], name: "index_hijos_on_category_id"
 
   create_table "padres", force: :cascade do |t|
     t.text     "nombre"
