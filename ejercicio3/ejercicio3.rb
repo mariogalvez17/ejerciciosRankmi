@@ -2,6 +2,7 @@ class Ejercicio3
 =begin
 	
 # Ejercicio 3 ##
+
 Usando RUBY Crear un algoritmo al cual se le deba ingresar un array de n números enteros, 
 más un numero de resultado, 
 ejemplo: Input: numbers={2, 7, 11, 15}, target=9 
@@ -14,31 +15,45 @@ ejemplo: Output: index1=1, index2=2
 =end
 
 
-	def self.ejercicio3 numbers, target
+	#=> finAddress: Metodo para conseguir los indices de  2 elementos de un arreglo que producen una suma igual al parametro target 
+	#=>Inputs
+		#=> numbers: Arreglo de numeros a evaluar
+		#=> target: Resultado buscado
+	#=>Output: hash con los dos indices del arreglo numbers que summados son igual a target
+
+	def self.findAdders numbers, target
 		
 		output= Hash.new
 		
 		numbers.sort!
-
-		puts numbers 
-
-		unless numbers[0]< 0
-
-			numbers.keep_if{| x| x <= target }
+		
+		unless numbers[0] < 0 	 # Se agrega por validacion de numeros negativos en el array en entrada  
+			
+			limite = numbers.bsearch{|x| x <= target } 	# Realiza busqueda binaria sobre el arreglo  		
+			
+			numbers= numbers.take(limite.to_i + 1) 		# limita el vector a la region relevante
 		
 		end
 
-		posibles=numbers.combination(2).to_a
-
-		posibles.each do |x| 
-			puts "tupla #{x}"; 
+		parejas=numbers.combination(2).to_a
+		
+		parejas.to_a.each do |x| 
+		
+		#puts "tupla #{x}"; 
+		
 			if (x[0] + x[1] == target )
+				
 				output={'index1'=> numbers.index(x[0]), 'index2' => numbers.index(x[1])}
 				break;
+			
 			end
+		
 		end
-	puts "output es #{output}"
-	 return output
-	end
+		
+		#puts "output es #{output}"
 
+		return output
+
+	end
+	#Validado para numeros negativos en el arreglo de entrada, optimizado para numeros positivos
 end
