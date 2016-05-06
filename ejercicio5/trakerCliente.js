@@ -174,8 +174,6 @@
   };
 })(this);
 
-alert('OS: ' + jscd.os + ' ' + jscd.osVersion + '\n' + 'Browser: ' + jscd.browser + ' ' + jscd.browserVersion + '\n' + 'Full User Agent: ' + navigator.userAgent);
-
 function getIp(){
   $.getJSON('//jsonip.com/?callback=?', function(data) {
     console.log(data['ip']);
@@ -199,8 +197,7 @@ $.ajax({
   this.clientSO= jscd.os + ' ' + jscd.osVersion ;
   this.clientBrowser=jscd.browser + ' ' + jscd.browserVersion
   this.clientIP=getIp();
-  if (this.clientIP == undefined){  
-    alert('coñoooooo');
+  if (this.clientIP == undefined){
     this.clientIP='192.168.1.121';
   }
   var Cliente = {clientIP: this.clientIP, clientBrowser: this.clientBrowser, clientSO: this.clientSO, clientToken: this.token};

@@ -24,7 +24,6 @@ module Api
 					cliente.application_id =Application.find_by(token: params[:clientToken]).id
 					if !cliente.save					
 						render json: { "message" => "No se salvo el registro de cliente"}, status: :unprocessable_entity #500
-						return
 					else
 						logger.info 'successfully registered'
 						render json: cliente, status:200
@@ -36,6 +35,8 @@ module Api
 			end
 
 			def set_cliente
+				logger.info '********************'
+				logger.info"********#{request.headers}*********************"
 				@cliente= Cliente.find_by(ip: params[:clientIP])
 			end
 		end
