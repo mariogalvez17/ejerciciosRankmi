@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  ip: MyText
+  browser: MyText
+  system: MyText
+
+two:
+  ip: MyText
+  browser: MyText
+  system: MyText
