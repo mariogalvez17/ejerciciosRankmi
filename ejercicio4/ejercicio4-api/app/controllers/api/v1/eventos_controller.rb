@@ -22,6 +22,7 @@ module Api
 				evento.cliente_id= Cliente.find_by(ip: params[:padre]).id
 				evento.hora=params[:hora]
 				if !evento.save
+					render json: { "message" => "No se salvo el registro"}, status: :unprocessable_entity #401
 					return
 				else
 					logger.info 'success'
