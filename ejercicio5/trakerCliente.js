@@ -176,14 +176,33 @@
 
 
 function getIp(){
-  $.getJSON('//jsonip.com/?callback=?', function(data) {
-    console.log(data['ip']);
-    return data['ip'];
-  });
+  //$.getJSON('//jsonip.com/?callback=?', function(data) {
+  //  console.log(data['ip']);
+  //  return data['ip'];
+  //});
+console.log ('Kilo');
+$.ajax({
+  url: '//jsonip.com/?callback=?',
+  dataType: 'json',
+  async: false,
+  success: function(data) {
+  console.log(data['ip']);
+  return data['ip'];
+  }
+});
 }
 
-function Tracker(TOKEN_VALIDACION) { 
 
+function Tracker(TOKEN_VALIDACION) { 
+  this.clientIP = $.ajax({
+  url: '//jsonip.com/?callback=?',
+  dataType: 'json',
+  async: false,
+  success: function(data) {
+    console.log('es aqui ' + data['ip']);
+   return data['ip'];
+  }
+});
 $.ajax({
     headers: {
         'X-Auth-Token' : TOKEN_VALIDACION,
@@ -194,13 +213,9 @@ $.ajax({
   console.log('Error: ' + JSON.stringify(data['responseJSON']));
   return;
 }).success(function(data){
-  this.token= TOKEN_VALIDACION;
-  this.clientSO= jscd.os + ' ' + jscd.osVersion ;
-  this.clientBrowser=jscd.browser + ' ' + jscd.browserVersion
-  this.clientIP=getIp();
-  if (this.clientIP == undefined){
-    this.clientIP='192.168.1.121';
-  }
+  this.token = TOKEN_VALIDACION;
+  this.clientSO = jscd.os + ' ' + jscd.osVersion ;
+  this.clientBrowser = jscd.browser + ' ' + jscd.browserVersion
   var Cliente = {clientIP: this.clientIP, clientBrowser: this.clientBrowser, clientSO: this.clientSO};
   
   $.ajax({
@@ -222,6 +237,16 @@ $.ajax({
 alert(this.clientSO+ ' ' + this.clientBrowser + ' ' + this.clientIP );
 });
 }
+
+/*
+Tracker.prototype.getIp = function(){
+  $.getJSON('//jsonip.com/?callback=?', function(data) {
+    console.log(data['ip']);
+    this.clientIP=data['ip'];
+    return data['ip'];
+  });
+};
+*/
 
 Tracker.prototype.track = function(Action,Options) {
   var fecha = new Date();    
@@ -245,9 +270,9 @@ Tracker.prototype.track = function(Action,Options) {
   // este evento se ejecuta cuando un usuario presiona el botón comprar.
 
 
-$(function () { 
+$(function () {   
   var app = new Tracker('z9xid0yon');
-
+  //console.log(app.getIp());
   $("#nuevo").click(function(){
       app.track($(this).attr("id"),options=
       {marca:$(this).data("marca"),
