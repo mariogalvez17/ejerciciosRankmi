@@ -174,27 +174,6 @@
   };
 })(this);
 
-alert('OS: ' + jscd.os + ' ' + jscd.osVersion + '\n' + 'Browser: ' + jscd.browser + ' ' + jscd.browserVersion + '\n' + 'Full User Agent: ' + navigator.userAgent);
-
-
-
-function getIp(){
-  //$.getJSON('//jsonip.com/?callback=?', function(data) {
-  //  console.log(data['ip']);
-  //  return data['ip'];
-  //});
-console.log ('Kilo');
-$.ajax({
-  url: '//jsonip.com/?callback=?',
-  dataType: 'json',
-  async: false,
-  success: function(data) {
-  console.log(data['ip']);
-  return data['ip'];
-  }
-});
-}
-
 
 function Tracker(TOKEN_VALIDACION) { 
   var xhttp= new XMLHttpRequest();
@@ -237,15 +216,6 @@ alert(this.clientSO+ ' ' + this.clientBrowser + ' ' + this.clientIP );
 });
 }
 
-/*
-Tracker.prototype.getIp = function(){
-  $.getJSON('//jsonip.com/?callback=?', function(data) {
-    console.log(data['ip']);
-    this.clientIP=data['ip'];
-    return data['ip'];
-  });
-};
-*/
 
 Tracker.prototype.track = function(Action,Options) {
   var fecha = new Date();    
@@ -271,7 +241,6 @@ Tracker.prototype.track = function(Action,Options) {
 
 $(function () {   
   var app = new Tracker('z9xid0yon');
-  //console.log(app.getIp());
   $("#nuevo").click(function(){
       app.track($(this).attr("id"),options=
       {marca:$(this).data("marca"),
