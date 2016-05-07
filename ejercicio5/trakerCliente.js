@@ -178,9 +178,13 @@
 function Tracker(TOKEN_VALIDACION) { 
   var xhttp= new XMLHttpRequest();
   xhttp.open("GET", '//jsonip.com/?callback=?', false);
-  xhttp.send();
+  xhttp.onreadystatechange=function(){  
+  if(xhttp.readyState==4 && xhttp.status==200)
+   thisclientIP= xhttp.responseText;
+}
+  xhttp.send(null);
   console.log(xhttp.responseText);
-  thisclientIP= xhttp.responseText;
+ 
 $.ajax({
     headers: {
         'X-Auth-Token' : TOKEN_VALIDACION,
