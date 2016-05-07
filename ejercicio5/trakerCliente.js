@@ -174,6 +174,7 @@
   };
 })(this);
 
+
 function getIp(){
   $.getJSON('//jsonip.com/?callback=?', function(data) {
     console.log(data['ip']);
@@ -184,11 +185,11 @@ function getIp(){
 function Tracker(TOKEN_VALIDACION) { 
 
 $.ajax({
-  xhrFields: {
-    withCredentials: false
-  },
+    headers: {
+        'X-Auth-Token' : TOKEN_VALIDACION,
+   },
   type: 'get',
-  url: 'http://localhost:3001/api/v1/applications/identity/'+TOKEN_VALIDACION,
+  url: 'http://localhost:3001/api/v1/applications/identity/',
 }).fail(function(data){
   console.log('Error: ' + JSON.stringify(data['responseJSON']));
   return;
@@ -200,12 +201,12 @@ $.ajax({
   if (this.clientIP == undefined){
     this.clientIP='192.168.1.121';
   }
-  var Cliente = {clientIP: this.clientIP, clientBrowser: this.clientBrowser, clientSO: this.clientSO, clientToken: this.token};
+  var Cliente = {clientIP: this.clientIP, clientBrowser: this.clientBrowser, clientSO: this.clientSO};
   
   $.ajax({
-  xhrFields: {
-    withCredentials: false
-  },
+    headers: {
+        'X-Auth-Token' : this.token
+   },
   type: 'post',
   url: 'http://localhost:3001/api/v1/clientes/',
   data: JSON.stringify(Cliente),
@@ -227,9 +228,9 @@ Tracker.prototype.track = function(Action,Options) {
   var  Evento = {nombre:Action, options:Options, padre:this.clientIP,hora:fecha};
   console.log(Evento);
   $.ajax({
-  xhrFields: {
-    withCredentials: false
-  },
+    headers: {
+        'X-Auth-Token' : this.token
+   },
   type: 'post',
   url: 'http://localhost:3001/api/v1/eventos',
   data :JSON.stringify(Evento),
@@ -244,10 +245,10 @@ Tracker.prototype.track = function(Action,Options) {
   // este evento se ejecuta cuando un usuario presiona el botón comprar.
 
 
-$(function () {	
-	var app = new Tracker('z9xid0yon');
+$(function () { 
+  var app = new Tracker('z9xid0yon');
 
-	$("#nuevo").click(function(){
+  $("#nuevo").click(function(){
       app.track($(this).attr("id"),options=
       {marca:$(this).data("marca"),
        modelo:$(this).data("modelo"),
