@@ -21,7 +21,7 @@ module Api
 			end
 
 			def identity	
-			 	if Application.find_by(token: params[:token])
+			 	if Application.find_by(token: request.headers['X-Auth-Token'])
 			 		render json: { "message" => "application validated"}, status: :ok
 			 	else
 			 		render json: { "message" => "can't validate app"}, status: :unprocessable_entity #401
