@@ -1,0 +1,84 @@
+Desarrollar un cliente Javascript que permita hacer tracking de eventos en objetos en HTML de manera similar a lo que permite hacer
+Google Analytics.
+
+Básicamente debe ser un javascript que se inserta en un html y luego mediante un simple llamado a una funcion se
+debe poder enviar un tracking con propiedades dinámicas.
+
+Para trackear un evento deberia bastar con inicializar la libreria con un token (que debe ser válido e identifique la aplicacion que se trackeará)
+
+$(document).ready(function(){
+    var app = Tracker.new(TOKEN_VERIFICACIÓN); //token que identifica la aplicación
+    app.track(EVENTO,{}); // esto se puede disparar por ejemplo en un click de botón o link.
+
+});
+Al crear el objeto tracker se debe obtener la siguiente información del "usuario"
+1.- Navegador
+2.- Sistema operativo
+3.- Dirección IP.
+Al crear el objeto tracker además se debe validar si el token existe o no. Si no existe arrojar error via consola del navegador.-
+
+
+Método track
+Debe enviar además la hora en la que se ejecuta el método.
+EVENTO : String que identifica el tipo de evento
+{} : parámetro JSON
+El evento tracker debe ser asyncrónico (optativo, no obligatorio)
+
+En el backend debe ser un api sencilla que tiene 3 modelos. Cliente, Evento y Application. Un cliente se define por una IP y debe almacenar el navegador, sistema operativo y dirección IP. Un cliente pude tener multiples eventos. Una acción tiene un nombre y un hash con parámetros variables. Application debe tener un nombre y un token.
+
+
+
+Códigos de ejemplo:
+
+================= HTML =================
+<a id="comprar_auto" data-marca="toyota" data-modelo="camry" data-anio="1997"></a>
+================= HTML =================
+
+
+================= JAVASCRIPT =================
+$(document).ready(function(){
+  var app = Tracker.new(TOKEN_VERIFICACIÓN);
+
+  // este evento se ejecuta cuando un usuario presiona el botón comprar.
+  $("#comprar_auto").click(function(){
+      app.tracker($(this).attr("id"),ç
+      {marca:$(this).data("marca"),
+       modelo:$(this).data("modelo"),
+       anio:$(this).data("anio")});
+  });
+
+});
+================= JAVASCRIPT =================
+
+================= RAILS =================
+def indentiy
+#Verifica la autenticidad del token.
+end
+def register_action
+
+    #@client es un objeto Cliente que permite almacenar la IP, SO y Dirección IP de un cliente. Ademas se le asocian varias acción
+    client_action = @client.client_action.new
+
+    # track_action es la acción que se quiere guardar
+    if !params.has_key?(:track_action)
+      render json:{"message" => "you must provide an action name"},status: :unprocessable_entity
+      return
+    end
+
+    client_action.action_name = params[:track_action]
+
+    if params.has_key?(:parameters)
+      # Guardamos los parámetros que vengan.- Son optativos.
+      client_action.parameters = params[:parameters]
+
+    end
+
+    if client_action.save
+      render json: { "message" => "action saved"}, status: :ok
+    elsif
+      render json: { "message" => "can't save action"}, status: :unprocessable_entity
+    end
+
+  end
+
+================= RAILS =================

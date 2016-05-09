@@ -11,7 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160429064519) do
+ActiveRecord::Schema.define(version: 20160506204000) do
+
+  create_table "applications", force: :cascade do |t|
+    t.text     "nombre"
+    t.text     "token"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "categoria", force: :cascade do |t|
+    t.text     "nombre"
+    t.text     "descripcion"
+    t.float    "valor"
+    t.integer  "padre_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "categories", force: :cascade do |t|
     t.text     "nombre"
@@ -20,15 +36,36 @@ ActiveRecord::Schema.define(version: 20160429064519) do
     t.integer  "padre_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    
   end
 
   add_index "categories", ["padre_id"], name: "index_categories_on_padre_id"
 
+  create_table "clientes", force: :cascade do |t|
+    t.text     "ip"
+    t.text     "browser"
+    t.text     "system"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.integer  "application_id"
+  end
+
+  add_index "clientes", ["application_id"], name: "index_clientes_on_application_id"
+
+  create_table "eventos", force: :cascade do |t|
+    t.text     "nombre"
+    t.text     "params"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "cliente_id"
+    t.datetime "hora"
+  end
+
+  add_index "eventos", ["cliente_id"], name: "index_eventos_on_cliente_id"
+
   create_table "hijos", force: :cascade do |t|
     t.text     "nombre"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.integer  "category_id"
   end
 

@@ -4,7 +4,7 @@ module Api
 
 			def index
 				@categories = Category.all
-				render json: @categories
+				render json: @categories				
 			end
 			
 
